@@ -1,44 +1,47 @@
-import React, { useState, useEffect } from 'react';
-// API 
-import API from '../API'
+import React, { useState } from 'react';
+
 // Config
-import { POSTER_SIZE, BACKDROP_SIZE, IMAGE_BASE_URL, API_KEY } from '../config';
+import { POSTER_SIZE, BACKDROP_SIZE, IMAGE_BASE_URL } from '../config';
+
 // Components
+import HeroImage from './HeroImage';
+import Grid from './Grid';
 
 // Hook
+import { useHomeFetch } from '../hooks/useHomeFetch';
 
 // Image
 import NoImage from '../images/no_image.jpg';
 
 const Home = () => {
-  const [state, setState] = useState();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const {
+    state,
+    loading,
+    error,
+    searchTerm,
+    setSearchTerm,
+    setIsLoadingMore
+  } = useHomeFetch();
 
-  const fetchMovies = async (page, searchTerm = '') => {
-    try {
-      setError(false);
-      setLoading(true);
 
-      const movies = await API.fetchMovies(searchTerm, page);
-      console.log(movies);
+  return (
+    <>
+      {!searchTerm && state.results[0] ? (
+        <HeroImage
+          image={`${IMAGE_BASE_URL}${BACKDROP_SIZE}${state.results[0].backdrop_path}`}
+          title={state.results[0].original_title}
+          text={state.results[0].overview}
+        />
+       ) : null}
 
-      // setState(prev => ({
-      //   ...movies,
-      //   results:
-      //     page > 1 ? [...prev.results, ...movies.results] : [...movies.results]
-      // }));
-    } catch (error) {
-      setError(true);
-    }
-  };
-  // Initial render
-  useEffect(() => {
-    fetchMovies(1);
-  }, [])
-
-  return <div>Homeee</div>
-}
+       <Grid header='Popular Movies'>
+         {state.results.map(movie => (
+            <div key={movie.id}>{movie.title}</div>
+         ))}
+       </Grid>
+    </>
+  );
+};
 
 export default Home
 

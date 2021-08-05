@@ -3,16 +3,16 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
  background: 
   linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 41%,
-    rgba(0, 0, 0, 0.65) 100%,
-  ),
+    to bottom
+    rgba(0, 0, 0, 0) 41%
+    rgba(0, 0, 0, 0.65) 100%
+  )
    var(--darkGrey);
   background-image: url(${ ({ image }) => image });
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 90vh;
+  height: 50vh;
   position: relative;
   animation: animateHeroImage 1s;
 
@@ -30,7 +30,7 @@ export const Wrapper = styled.div`
 export const Content = styled.div`
   padding: 20px;
   max-width: var(--maxWidth);
-  margin: 0, auto;
+  margin: 0 auto;
 `;
 
 export const Text = styled.div`

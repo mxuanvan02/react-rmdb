@@ -7,8 +7,9 @@ import { POSTER_SIZE, BACKDROP_SIZE, IMAGE_BASE_URL } from '../config';
 import HeroImage from './HeroImage';
 import Grid from './Grid';
 import Thumb from './Thumb';
-import Spinner from './Spinner'
-import SearchBar from './SearchBar'
+import Spinner from './Spinner';
+import SearchBar from './SearchBar';
+import Button from './Button';
 
 // Hooks
 import { useHomeFetch } from '../hooks/useHomeFetch';
@@ -25,6 +26,10 @@ const Home = () => {
     setSearchTerm,
     setIsLoadingMore
   } = useHomeFetch();
+
+  console.log(state)
+
+  if (error) return <div>Something went wrong...</div>;
 
 
   return (
@@ -51,7 +56,10 @@ const Home = () => {
             />
          ))}
        </Grid>
-       <Spinner />
+       {loading && <Spinner />}
+       {state.page < state.total_pages && !loading && (
+        <Button text='Load More' callback={() => setIsLoadingMore(true)} />
+       )}
     </>
   );
 };

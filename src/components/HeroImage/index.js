@@ -12,5 +12,5 @@ const HeroImage = ({ image, title, text }) => (
       </Text>
     </Content>
   </Wrapper>
-);
+)
 export default HeroImage
